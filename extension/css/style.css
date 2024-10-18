@@ -1,0 +1,543 @@
+#mindfulBrowsingConfirm html, #mindfulBrowsingConfirm body, #mindfulBrowsingConfirm div, #mindfulBrowsingConfirm span, #mindfulBrowsingConfirm applet, #mindfulBrowsingConfirm object, #mindfulBrowsingConfirm iframe,
+#mindfulBrowsingConfirm h1, #mindfulBrowsingConfirm h2, #mindfulBrowsingConfirm h3, #mindfulBrowsingConfirm h4, #mindfulBrowsingConfirm h5, #mindfulBrowsingConfirm h6, #mindfulBrowsingConfirm p, #mindfulBrowsingConfirm blockquote, #mindfulBrowsingConfirm pre,
+#mindfulBrowsingConfirm a, #mindfulBrowsingConfirm abbr, #mindfulBrowsingConfirm acronym, #mindfulBrowsingConfirm address, #mindfulBrowsingConfirm big, #mindfulBrowsingConfirm cite, #mindfulBrowsingConfirm code,
+#mindfulBrowsingConfirm del, #mindfulBrowsingConfirm dfn, #mindfulBrowsingConfirm em, #mindfulBrowsingConfirm img, #mindfulBrowsingConfirm ins, #mindfulBrowsingConfirm kbd, #mindfulBrowsingConfirm q, #mindfulBrowsingConfirm s, #mindfulBrowsingConfirm samp,
+#mindfulBrowsingConfirm small, #mindfulBrowsingConfirm strike, #mindfulBrowsingConfirm strong, #mindfulBrowsingConfirm sub, #mindfulBrowsingConfirm sup, #mindfulBrowsingConfirm tt, #mindfulBrowsingConfirm var,
+#mindfulBrowsingConfirm b, #mindfulBrowsingConfirm u, #mindfulBrowsingConfirm i, #mindfulBrowsingConfirm center,
+#mindfulBrowsingConfirm dl, #mindfulBrowsingConfirm dt, #mindfulBrowsingConfirm dd, #mindfulBrowsingConfirm ol, #mindfulBrowsingConfirm ul, #mindfulBrowsingConfirm li,
+#mindfulBrowsingConfirm fieldset, #mindfulBrowsingConfirm form, #mindfulBrowsingConfirm label, #mindfulBrowsingConfirm legend,
+#mindfulBrowsingConfirm table, #mindfulBrowsingConfirm caption, #mindfulBrowsingConfirm tbody, #mindfulBrowsingConfirm tfoot, #mindfulBrowsingConfirm thead, #mindfulBrowsingConfirm tr, #mindfulBrowsingConfirm th, #mindfulBrowsingConfirm td,
+#mindfulBrowsingConfirm article, #mindfulBrowsingConfirm aside, #mindfulBrowsingConfirm canvas, #mindfulBrowsingConfirm details, #mindfulBrowsingConfirm embed, #mindfulBrowsingConfirm 
+#mindfulBrowsingConfirm figure, #mindfulBrowsingConfirm figcaption, #mindfulBrowsingConfirm footer, #mindfulBrowsingConfirm header, #mindfulBrowsingConfirm hgroup, #mindfulBrowsingConfirm 
+#mindfulBrowsingConfirm menu, #mindfulBrowsingConfirm nav, #mindfulBrowsingConfirm output, #mindfulBrowsingConfirm ruby, #mindfulBrowsingConfirm section, #mindfulBrowsingConfirm summary,
+#mindfulBrowsingConfirm time, #mindfulBrowsingConfirm mark, #mindfulBrowsingConfirm audio, #mindfulBrowsingConfirm video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    text-rendering: optimizeLegibility;
+}
+/* HTML5 display-role reset for older browsers */
+#mindfulBrowsingConfirm article, #mindfulBrowsingConfirm aside, #mindfulBrowsingConfirm details, #mindfulBrowsingConfirm figcaption, #mindfulBrowsingConfirm figure, #mindfulBrowsingConfirm 
+footer, #mindfulBrowsingConfirm header, #mindfulBrowsingConfirm hgroup, #mindfulBrowsingConfirm menu, #mindfulBrowsingConfirm nav, #mindfulBrowsingConfirm section {
+    display: block;
+}
+#mindfulBrowsingConfirm {
+    line-height: 1;
+	height: 100%;
+	width: 100%;
+}
+#mindfulBrowsingConfirm ol, #mindfulBrowsingConfirm ul {
+    list-style: none;
+}
+#mindfulBrowsingConfirm blockquote, #mindfulBrowsingConfirm q {
+    quotes: none;
+}
+#mindfulBrowsingConfirm blockquote:before, #mindfulBrowsingConfirm blockquote:after,
+q:before, #mindfulBrowsingConfirm q:after {
+    content: '';
+    content: none;
+}
+#mindfulBrowsingConfirm table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#mindfulBrowsingConfirm, #mindfulBrowsingPopup {
+    display: block;
+    font-size: 16px;
+    font-family: Lato, "Helvetica Neue", sans-serif;
+    font-weight: 300;
+    background-color: #888;
+    z-index: 100;
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover;    /* Mozilla*/
+    -o-background-size: cover;      /* Opera*/
+    background-size: cover;         /* Generic*/
+    z-index: 1;
+}
+
+/* Confirm page */
+#mindfulBrowsingConfirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    z-index: 9999999999;
+    background-color: rgba(0, 0, 0, 1);
+
+    text-align: center;
+	opacity: 1.0;
+	transition: opacity 0.4s ease;
+}
+#mindfulBrowsingConfirm.hidden {
+	opacity: 0.0;
+}
+#mindfulBrowsingConfirm div {
+    display: block;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    border-radius: 0;
+
+}
+#mindfulBrowsingConfirm #container {
+    top: 0;
+}
+#mindfulBrowsingConfirm h1, #mindfulBrowsingConfirm h2 {
+    -webkit-margin-before: 0.67em;
+    -webkit-margin-after: 0.67em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+#mindfulBrowsingConfirm h1, #mindfulBrowsingConfirm h2, #mindfulBrowsingConfirm h3, #mindfulBrowsingConfirm .timer {
+    color: rgba(255, 255, 255, 1);
+    font-weight: 200;
+    /* text-shadow: 1px 1px 2px rgba(0,0,0,0.7); */
+}
+#mindfulBrowsingConfirm h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+#mindfulBrowsingConfirm h2 {
+    font-size: 26px;
+}
+#mindfulBrowsingConfirm h3 {
+	font-size: 20px;
+    margin-bottom: 80px;
+}
+#mindfulBrowsingConfirm .timer {
+	font-size: 100px;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingHeading {
+    /*background: rgba(255, 255, 255, 0.1);*/
+    padding: 50px 0;
+    font-size: 20px;
+    margin: 60px auto 60px 0;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingBody div {
+	opacity: 1.0;
+	transition: opacity 0.4s ease;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingBody div.hidden {
+	opacity: 0.0;
+}
+#mindfulBrowsingConfirm a.mindfulBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 50px;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: #CCC;
+    background-color: rgba(255,255,255,0.65);
+    color: rgba(0,0,0,0.4);
+    transition: background 0.4s ease, color 0.4s ease;
+    font-weight: 300;
+}
+#mindfulBrowsingConfirm a.mindfulBtn:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: rgba(0,0,0,0.6);
+}
+#mindfulBrowsingConfirm .mindfulBrowsingQuickResume {
+	display: block;
+	position: absolute;
+	right: 45px;
+	top: 30px;
+	text-align: center;
+    transition: all 0.4s ease;
+	opacity: 0.15;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingQuickResume:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingQuickResume h1 {
+	font-size: 100px;
+	font-weight: 600;
+	margin: 0;
+	line-height: 1;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingQuickResume h2 {
+	position: relative;
+	font-size: 24px;
+	font-weight: 100;
+	line-height: 1;
+	margin: 0;
+	opacity: 0;
+	top: 1em;
+    transition: all 0.4s ease;
+}
+#mindfulBrowsingConfirm .mindfulBrowsingQuickResume:hover h2 {
+	opacity: 0.8;
+	top: -0.25em;
+}
+#mindfulBrowsingConfirm #mindfulBrowsingPhotoCredit {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+}
+
+/* Popup */
+#mindfulBrowsingPopup {
+    z-index: 100;
+    color: rgba(0, 0, 0, 0.4);
+    background-color: #FFF;
+    width: 640px;
+    min-height: 400px;
+    padding: 10px;
+    padding-bottom: 0;
+}
+#mindfulBrowsingPopup #container {
+    padding: 30px 30px 150px 30px;
+}
+#mindfulBrowsingPopup h1, #mindfulBrowsingPopup h2 {
+    color: #73c8f7;
+    font-weight: 100;
+    font-size: 40px;
+}
+#mindfulBrowsingPopup a.mindfulBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+    margin: 5px 0;
+    background-color: #73c8f7;
+    color: rgba(255,255,255, 0.8);
+    cursor: pointer;
+    opacity: 0.6;
+}
+#mindfulBrowsingPopup a.mindfulBtn:hover {
+    opacity: 1;
+    background-color: #6cbbe7;
+    color: rgba(255,255,255, 1);
+}
+#mindfulBrowsingPopup a.addX {
+    display: inline-block;
+    transition: background 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+    color: #73c8f7;
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 30px;
+    margin-left: 2px;
+}
+#mindfulBrowsingPopup a.addX .label {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    line-height: 34px;
+    height: 36px;
+    vertical-align: top;
+    text-transform: lowercase;
+    font-weight: 100;
+    font-size: 24px;
+}
+#mindfulBrowsingPopup a.addX:hover {
+    opacity: 1;
+    color: #6cbbe7;
+}
+#mindfulBrowsingPopup a.addX:hover .label {
+    opacity: 1;
+}
+#mindfulBrowsingPopup .logo {
+    display: block;
+    width: 70%;
+    padding: 0;
+    font-weight: 300;
+    color: #888;
+    opacity: 1;
+    margin-bottom: 16px;
+}
+#mindfulBrowsingPopup .logo a {
+    font-family: Lato, "Helvetica Neue", sans-serif;
+    outline: none;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(33, 171, 247, 0.66);
+    text-decoration: none;
+}
+#mindfulBrowsingPopup .if_logo {
+    
+    display: block;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-weight: 300;
+    color: #000;
+    
+}
+#mindfulBrowsingPopup .if_logo .by {
+    opacity: 0.2;
+}
+#mindfulBrowsingPopup .if_logo a {
+    font-family: "Sorts Mill Goudy", serif;
+    outline: none;
+    font-size: 20px;
+    font-weight: 200;
+    color: #000;
+    text-decoration: none;
+    opacity: 0.2;
+    transition: opacity 0.4s ease;
+}
+#mindfulBrowsingPopup .if_logo:hover a {
+    opacity: 0.8;
+}
+#mindfulBrowsingPopup .if_logo img {
+    vertical-align: middle;
+    padding: 0 4px 7px 6px;
+}
+
+#mindfulBrowsingPopup .logo img {
+    vertical-align: middle;
+    padding-bottom: 4px;
+}
+#mindfulBrowsingPopup h2 {
+    margin: 0 0 0 0;
+    font-size: 30px;
+}
+#mindfulBrowsingPopup h2 small {
+    display: block;
+    font-size: 18px;
+}
+
+#mindfulBrowsingPopup a.removeX {
+    text-decoration: none;
+    font-size: 20px;
+    text-transform: lowercase;
+    font-weight: 100;
+    color: #F2F2F2;
+    margin-left: 6px;
+    cursor: pointer;
+    transition: color 0.4s ease;
+}
+#mindfulBrowsingPopup a.removeX .label {
+    display: inline-block;
+    opacity: 0;
+    height: 32px;
+    vertical-align: middle;
+    transition: opacity 0.4s ease;
+}
+#mindfulBrowsingPopup a.removeX:hover .label {
+    opacity: 1;
+}
+#mindfulBrowsingPopup .response {
+	margin: 0 0 2px 0;
+}
+#mindfulBrowsingPopup .response:hover a.removeX {
+    color: #CCC;
+}
+#mindfulBrowsingPopup .response:hover label, #mindfulBrowsingPopup .setting:hover > label {
+    color: #454545;
+}
+#mindfulBrowsingPopup .responses, #mindfulBrowsingPopup .settings {
+    padding: 0 0 40px 20px;
+}
+#mindfulBrowsingPopup input, #mindfulBrowsingPopup select {
+    border-radius: 2px;
+    background: #FCFCFC;
+    color: #777;
+    padding: 10px 4px;
+    outline: none;
+
+    font-family: Lato, "Helvetica Neue", sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    border: 0px;
+    transition: color 0.4 ease;
+}
+#mindfulBrowsingPopup input {
+	width: 400px;
+}
+#mindfulBrowsingPopup label {
+    font-weight: 300;
+    display: inline-block;
+    width: 38px;
+    text-align: left;
+    padding-right: 6px;
+    color: #777;
+    transition: color 0.4 ease;
+}
+#mindfulBrowsingPopup .response:hover input, #mindfulBrowsingPopup .setting:hover > input, #mindfulBrowsingPopup input:focus {
+    /*background: #EEE;*/
+    font-weight: 300;
+    color: #454545;
+}
+#mindfulBrowsingPopup .responses.inspirations input { 
+    width: 445px;
+}
+#mindfulBrowsingPopup .setting > label {
+	width: 135px;
+	font-size: 20px;
+	padding-bottom: 6px;
+}
+#mindfulBrowsingPopup .settings input {
+	width: 50px;
+	margin: 0 5px 0 5px;
+	text-align: center;
+}
+#mindfulBrowsingPopup .setting {
+	margin: 0 0 8px 0;
+	vertical-align: middle;
+}
+#mindfulBrowsingPopup label.switch {
+	position: relative;
+	top: 3px;
+	left: 13px;
+	display: inline-block;
+	width: 42px;
+	height: 24px;
+	padding: 0;
+	margin-top: 6px;
+}
+#mindfulBrowsingPopup .switch input {
+	display: none;
+}
+#mindfulBrowsingPopup .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 42px;
+	background-color: #ccc;
+	transition: 0.4s;
+	border-radius: 12px;
+}
+#mindfulBrowsingPopup .slider:before {
+	position: absolute;
+	content: "";
+	height: 18px;
+	width: 18px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	transition: 0.4s;
+	border-radius: 50%;
+}
+#mindfulBrowsingPopup .switch input:checked + .slider {
+	background-color: #888;
+}
+#mindfulBrowsingPopup .switch input:checked + .slider:before {
+	transform: translateX(18px);
+}
+#mindfulBrowsingPopup .setting input[type="checkbox"] {
+	margin: 14px 0;
+}
+#mindfulBrowsingPopup .setting .detail {
+	padding: 16px 0 8px 20px;
+	display: block;
+	transition: 0.4s ease;
+	opacity: 1.0;
+	font-size: 14px;
+	height: 1px;
+}
+#mindfulBrowsingPopup .setting .detail.photo {
+	height: 47px;
+}
+#mindfulBrowsingPopup .setting .detail.schedule {
+	height: 97px;
+}
+#mindfulBrowsingPopup .setting .detail.limitation {
+	height: 47px;
+}
+#mindfulBrowsingPopup .setting .detail.hidden {
+	height: 0px;
+	padding: 0 0 0 20px;
+	overflow: hidden;
+	opacity: 0.0;
+}
+#mindfulBrowsingPopup .detailItem {
+	margin: 0 0 16px 0;
+}
+#mindfulBrowsingPopup .detailItem input[type="time"] {
+	width: 120px;
+}
+#mindfulBrowsingPopup .detailItem input:hover, #mindfulBrowsingPopup .detailItem input:focus, .detailItem select:hover, #mindfulBrowsingPopup .detailItem select:focus {
+    color: #454545;
+}
+#mindfulBrowsingPopup .detailItem, #mindfulBrowsingPopup .detailItem label {
+	font-size: 16px;
+	color: #aaa;
+}
+#mindfulBrowsingPopup .detailItem label:hover {
+	color: #454545;
+}
+#mindfulBrowsingPopup .detailItem label.checkbox {
+	display: inline-block;
+	position: relative;
+	width: 32px;
+	padding: 0 0 0 24px;
+	margin: 0 6px 0 0;
+	user-select: none;
+	cursor: pointer;
+}
+#mindfulBrowsingPopup .detailItem .checkbox input {
+	display: none;
+}
+#mindfulBrowsingPopup .detailItem .checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 18px;
+	width: 18px;
+	background-color: #ccc;
+}
+#mindfulBrowsingPopup .detailItem .checkbox:hover input + .checkmark {
+	background-color: #bbb;
+}
+#mindfulBrowsingPopup .detailItem .checkbox input:checked + .checkmark {
+	background-color: #888;
+}
+#mindfulBrowsingPopup .checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;left: 6px;
+	top: 1px;
+	width: 4px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	transform: rotate(45deg);
+}
+#mindfulBrowsingPopup .detailItem input:checked + .checkmark:after {
+	display: block;
+}
+#mindfulBrowsingPopup input::-webkit-input-placeholder{ 
+    color: rgba(45, 45, 45, 1);
+}
+@media (max-width: 650px) and (max-height: 450px) {
+    #mindfulBrowsingConfirm {
+        display: none;
+    }
+}
+@media (max-height: 600px) {
+    #mindfulBrowsingConfirm .mindfulBrowsingHeading {
+        margin-bottom: 0;
+    }
+}
+@media (max-height: 450px) {
+    #mindfulBrowsingConfirm .mindfulBrowsingHeading {
+        margin-top: 20px;
+        padding: 0;
+    }
+}

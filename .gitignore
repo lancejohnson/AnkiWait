@@ -1,0 +1,12 @@
+*.pyc
+.DS_Store
+project.db
+*.sqlite3
+*.sublime-workspace
+chromedriver.log
+ghostdriver.log
+celerybeat-schedule
+venv/*
+source/*
+build/*
+mindfulbrowsing.zip
