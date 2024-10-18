@@ -202,10 +202,10 @@ function removeClassName(ele, className) {
 		ele.classList.add("hidden");
         ele.id="mindfulBrowsingConfirm";
         var innerHTML = [
-        "<div class='mindfulBrowsingHeading'>",
-            "<h1 id='mindfulBrowsingMessage'></h1>",
-			"<h3 id='mindfulBrowsingNumSessions'></h3>",
-            "<h2>"+inspiration+"</h2>",
+        "<div class='mindfulBrowsingHeading' style='width: 50vw; margin: 0 auto; text-align: left; font-family: Helvetica, sans-serif;'>",
+            "<h1 id='mindfulBrowsingMessage' style='font-size: 50px;'></h1>",
+			"<h3 id='mindfulBrowsingNumSessions' style='font-size: 30px;'></h3>",
+            "<h2 style='font-size: 50px;'>"+inspiration+"</h2>",
         "</div>",
 		"<div class='mindfulBrowsingBody'>",
 			"<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
@@ -227,7 +227,9 @@ function removeClassName(ele, className) {
 		
 		ele.innerHTML = innerHTML;
 		
-        ele.style.background = "linear-gradient(to bottom, rgba(97,144,187,1) 0%,rgba(191,227,255,1) 100%)";
+        ele.style.background = "rbg(0,0,0)";
+        ele.style.fontFamily = "Helvetica, Arial, sans-serif";
+		
 		
         if (photoSettings.active) {
 			ele.innerHTML += "<a href='" + currentPhoto.info.credit_url + "' id='mindfulBrowsingPhotoCredit'>Photo by " + currentPhoto.info.credit + "</a>";
