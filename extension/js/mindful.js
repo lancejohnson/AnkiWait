@@ -206,9 +206,9 @@ function removeClassName(ele, className) {
         ele.id="mindfulBrowsingConfirm";
         var innerHTML = [
         "<div class='mindfulBrowsingHeading' style='width: 50vw; margin: 0 auto; text-align: left; font-family: Helvetica, sans-serif;'>",
-            "<h1 id='mindfulBrowsingMessage' style='font-size: 50px;'></h1>",
+            "<h1 id='mindfulBrowsingMessage' style='font-size: 50px;'></h1>",	
 			"<h3 id='mindfulBrowsingNumSessions' style='font-size: 30px;'></h3>",
-            "<h2 style='font-size: 50px;'>"+inspiration+"</h2>",
+            "<iframe src='https://app.mochi.cards/?hide-sidebar=true&page=learn' height='500' width='100%' style='border:0'></iframe>",
         "</div>",
 		"<div class='mindfulBrowsingBody'>",
 			"<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
