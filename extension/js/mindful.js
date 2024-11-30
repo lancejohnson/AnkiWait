@@ -1,3 +1,6 @@
+// This is the main file for the Mindful Browsing Chrome extension.
+// It is responsible for managing the browsing timeout, overlay, and wait timer.
+
 Array.prototype.indexOf = function(value, keypath) {
 	for (var i = 0; i < this.length; i++) {
     	var ele = this[i];
