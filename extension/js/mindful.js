@@ -215,8 +215,8 @@ function removeClassName(ele, className) {
 	        "<div class='mindfulBrowsingBody'>",
 	        "<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
 	        "<div class='options hidden' id='mindfulBrowsingOptions'>",
-	        "<a class='mindfulBtn' id='mindfulBrowsingContinue' href='#'>Yes, " + browseTimeMinutes + " minute" + (browseTimeMinutes > 1 ? "s" : "") + ".</a>",
-	        "<a class='mindfulBtn' id='mindfulBrowsingLeave' href='javascript:window.open(location,\"_self\");window.close();'>Actually, nah.</a>",
+	        "<a class='mindfulBtn' id='mindfulBrowsingContinue' href='#' style='margin-right: 20px; margin-bottom: 15px; display: inline-block;'>Yes, " + browseTimeMinutes + " minute" + (browseTimeMinutes > 1 ? "s" : "") + ".</a>",
+	        "<a class='mindfulBtn' id='mindfulBrowsingLeave' href='javascript:window.open(location,\"_self\");window.close();' style='display: inline-block;'>Actually, nah.</a>",
 	        "</div>",
 	        "</div>"
 	    ].join("");
@@ -384,7 +384,6 @@ function removeClassName(ele, className) {
 
 	    mindfulBrowsing.updateOverlay();
 	};
-
 
 	mindfulBrowsing.addOverlayIfActive = function() {
 		if ( mindfulBrowsing.isActive() ) {
@@ -670,3 +669,4 @@ function removeClassName(ele, className) {
 		}
     }
 })();
+
