@@ -248,132 +248,135 @@ function removeClassName(ele, className) {
 	    document.body.appendChild(ele);
 	    removeClassName(ele, "hidden");
 
-	    try {
-	        // Step 1: Get a list of card IDs from the selected deck
-	        const findCardsResponse = await fetch("http://127.0.0.1:8765", {
+	    async function loadCard() {
+	        // Step 1: Load deck on open
+	        await fetch("http://127.0.0.1:8765", {
 	            method: "POST",
 	            headers: { "Content-Type": "application/json" },
 	            body: JSON.stringify({
-	                action: "findCards",
+	                action: "guiDeckReview",
 	                version: 6,
 	                params: {
-	                    query: "deck:Sanctuary" // Replace 'default' with your desired deck name
+	                    name: "Sanctuary"
 	                }
 	            })
 	        });
-	        const findCardsData = await findCardsResponse.json();
 
-	        if (findCardsData.error) {
-	            document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${findCardsData.error}</p>`;
-	            return;
-	        }
+	        // Step 1B: Get card information
+	        const cardInfoResponse = await fetch("http://127.0.0.1:8765", {
+	            method: "POST",
+	            headers: { "Content-Type": "application/json" },
+	            body: JSON.stringify({
+	                action: "guiCurrentCard",
+	                version: 6
+	            })
+	        });
+	        const cardInfoData = await cardInfoResponse.json();
 
-	        if (findCardsData.result && findCardsData.result.length > 0) {
-	            // Step 2: Get details about the first card in the list
-	            const cardId = findCardsData.result[0]; // Take the first card ID from the list
-	            const cardInfoResponse = await fetch("http://127.0.0.1:8765", {
+	        if (cardInfoData.error) {
+	            document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${cardInfoData.error}</p>`;
+	        } else if (cardInfoData.result) {
+	            const question = cardInfoData.result.question;
+	            const answer = cardInfoData.result.answer;
+
+	            // Step 3: Show the question and start the card timer
+	            document.getElementById("ankiCardContainer").innerHTML = `
+	                <div style='font-family: Helvetica, sans-serif;'>
+	                    <h2 style="color: black;">Flashcard</h2>
+	                    <div style='padding: 10px; background: rgba(250,250,250,0.5); border-radius: 3px;'>
+	                        <strong>Question:</strong> ${question}
+	                    </div>
+	                    <br>
+	                    <div id='answer-container' style='display: none; padding: 10px; background: rgba(250,250,250,0.5);
+	                     border-radius: 3px;'>
+	                        <strong>Answer:</strong> ${answer}
+	                    </div>
+	                    <button id='show-answer-button' style='padding: 10px; margin-top: 10px; border-radius: 3px;
+	                     background: #007bff; color: #ffffff; border: none; cursor: pointer;'>Show Answer</button>
+	                     <div id='answer-options' style='display: none; margin-top: 20px; justify-content: space-around;
+	                      font-size: 21px;'>
+	                        <button class='answer-button' data-ease='1' style='
+	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
+	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Again</button>
+	                        <button class='answer-button' data-ease='2' style='
+	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
+	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Hard</button>
+	                        <button class='answer-button' data-ease='3' style='
+	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
+	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Good</button>
+	                        <button class='answer-button' data-ease='4' style='
+	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
+	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Easy</button>
+	                    </div>
+	                </div>
+	            `;
+
+	            // Start card timer
+	            await fetch("http://127.0.0.1:8765", {
 	                method: "POST",
 	                headers: { "Content-Type": "application/json" },
 	                body: JSON.stringify({
-	                    action: "cardsInfo",
-	                    version: 6,
-	                    params: {
-	                        cards: [cardId]
-	                    }
+	                    action: "guiStartCardTimer",
+	                    version: 6
 	                })
 	            });
-	            const cardInfoData = await cardInfoResponse.json();
 
-	            if (cardInfoData.error) {
-	                document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${cardInfoData.error}</p>`;
-	            } else if (cardInfoData.result && cardInfoData.result.length > 0) {
-	                // Step 3: Display card details in place of the Mochi iframe
-	                const card = cardInfoData.result[0];
-	                const question = card.question;
-	                const answer = card.answer;
+	            const showAnswerButton = document.getElementById('show-answer-button');
+	            const answerContainer = document.getElementById('answer-container');
+	            const answerOptions = document.getElementById('answer-options');
+	            showAnswerButton.addEventListener('click', async () => {
+	                // Show answer
+	                await fetch("http://127.0.0.1:8765", {
+	                    method: "POST",
+	                    headers: { "Content-Type": "application/json" },
+	                    body: JSON.stringify({
+	                        action: "guiShowAnswer",
+	                        version: 6
+	                    })
+	                });
 
-	                document.getElementById("ankiCardContainer").innerHTML = `
-                        <div style='font-family: Helvetica, sans-serif;'>
-				            <h2 style="color: black;">Flashcard</h2>
-				            <div style='padding: 10px; background: rgba(250,250,250,0.5); border-radius: 3px;'>
-				                <strong>Question:</strong> ${question}
-				            </div>
-				            <br>
-				            <div id='answer-container' style='display: none; padding: 10px; background: rgba(250,250,250,0.5);
-				             border-radius: 3px;'>
-				                <strong>Answer:</strong> ${answer}
-				            </div>
-				            <button id='show-answer-button' style='padding: 10px; margin-top: 10px; border-radius: 3px;
-				             background: #007bff; color: #ffffff; border: none; cursor: pointer;'>Show Answer</button>
-				             <div id='answer-options' style='display: none; margin-top: 20px; justify-content: space-around;
-				              font-size: 21px;'>
-				                <button class='answer-button' data-ease='1' style='
-				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
-				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Again</button>
-				                <button class='answer-button' data-ease='2' style='
-				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
-				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Hard</button>
-				                <button class='answer-button' data-ease='3' style='
-				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
-				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Good</button>
-				                <button class='answer-button' data-ease='4' style='
-				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
-				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Easy</button>
-				            </div>
-				        </div>
-                    `;
-                    const showAnswerButton = document.getElementById('show-answer-button');
-                    const answerContainer = document.getElementById('answer-container');
-                    const answerOptions = document.getElementById('answer-options');
-                    showAnswerButton.addEventListener('click', () => {
-		                answerContainer.style.display = 'block';
-		                showAnswerButton.style.display = 'none';
-		                answerOptions.style.display = 'flex';
-		            });
+	                answerContainer.style.display = 'block';
+	                showAnswerButton.style.display = 'none';
+	                answerOptions.style.display = 'flex';
+	            });
 
-		            const answerButtons = document.querySelectorAll('.answer-button');
-		             // Handle Answer Buttons Click
-			        answerButtons.forEach(button => {
-			            button.addEventListener('click', async (event) => {
-			                const easeValue = event.target.getAttribute('data-ease');
-			                
-			                try {
-			                    // API Call to answer the card
-			                    const response = await fetch("http://127.0.0.1:8765", {
-			                        method: "POST",
-			                        headers: { "Content-Type": "application/json" },
-			                        body: JSON.stringify({
-			                            action: "answerCards",
-			                            version: 6,
-			                            params: {
-			                                answers: [
-			                                    {
-			                                        cardId: cardId, // Replace with actual card ID
-			                                        ease: parseInt(easeValue)  // Ease value between 1 (Again) and 4 (Easy)
-			                                    }
-			                                ]
-			                            }
-			                        })
-			                    });
+	            const answerButtons = document.querySelectorAll('.answer-button');
+	            // Handle Answer Buttons Click
+	            answerButtons.forEach(button => {
+	                button.addEventListener('click', async (event) => {
+	                    const easeValue = event.target.getAttribute('data-ease');
 
-			                    const responseData = await response.json();
-			                    if (responseData.error) {
-			                        alert(`Error: ${responseData.error}`);
-			                    } else {
-			                        alert(`Card answered with ease value: ${easeValue} is ${responseData.result[0]}`);
-			                    }
-			                } catch (err) {
-			                    alert(`Error: ${err.message}`);
-			                }
-			            });
-			        });
-	            }
-	        } else {
-	            document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">No cards found in the selected deck.</p>`;
+	                    try {
+	                        // Answer the card
+	                        const response = await fetch("http://127.0.0.1:8765", {
+	                            method: "POST",
+	                            headers: { "Content-Type": "application/json" },
+	                            body: JSON.stringify({
+	                                action: "guiAnswerCard",
+	                                version: 6,
+	                                params: {
+	                                    ease: parseInt(easeValue)
+	                                }
+	                            })
+	                        });
+
+	                        const responseData = await response.json();
+	                        if (responseData.error) {
+	                            alert(`Error: ${responseData.error}`);
+	                        } else {
+	                            // Load another card after answering
+	                            loadCard();
+	                        }
+	                    } catch (err) {
+	                        alert(`Error: ${err.message}`);
+	                    }
+	                });
+	            });
 	        }
-	    } catch (err) {
-	        document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${err.message}</p>`;
 	    }
+
+	    // Initial card load
+	    await loadCard();
 
 	    // Attach event handlers for buttons
 	    var btn = document.getElementById("mindfulBrowsingContinue");
