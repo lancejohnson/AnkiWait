@@ -197,68 +197,195 @@ function removeClassName(ele, className) {
         setTimeout(mindfulBrowsing.addOverlayIfActive, timeout_diff);
 		mindfulBrowsing.removeOverlay();
     };
-    mindfulBrowsing.addOverlay = function() {
-        inspiration = inspirations[Math.floor(Math.random() * inspirations.length)].title;
-        var body = document.body;
-		
-        var ele = document.createElement("div");
-		ele.classList.add("hidden");
-        ele.id="mindfulBrowsingConfirm";
-        var innerHTML = [
-        "<div class='mindfulBrowsingHeading' style='width: 50vw; margin: 0 auto; text-align: left; font-family: Helvetica, sans-serif;'>",
-            "<h1 id='mindfulBrowsingMessage' style='font-size: 50px;'></h1>",	
-			"<h3 id='mindfulBrowsingNumSessions' style='font-size: 30px;'></h3>",
-            "<iframe src='https://app.mochi.cards/?hide-sidebar=true&page=learn' height='500' width='100%' style='border:0'></iframe>",
-        "</div>",
-		"<div class='mindfulBrowsingBody'>",
-			"<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
-			"<div class='options hidden' id='mindfulBrowsingOptions'>",
-				"<a class='mindfulBtn' id='mindfulBrowsingContinue' href='#'>Yes, "+browseTimeMinutes+" minute"+( browseTimeMinutes > 1 ? "s" : "" )+".</a>",
-				"<a class='mindfulBtn' id='mindfulBrowsingLeave' href='javascript:window.open(location,\"_self\");window.close();'>Actually, nah.</a>",
-			"</div>",
-		"</div>",
-        ].join("");
-		
-		if( quickResume.active ) {
-			innerHTML += [
-				"<div class='mindfulBrowsingQuickResume' id='mindfulBrowsingQuickResumeButton'>",
-					"<h1>!</h1>",
-					"<h2>resume</h2>",
-				"</div>"
-			].join("");
-		}
-		
-		ele.innerHTML = innerHTML;
-		
-        ele.style.background = "rbg(0,0,0)";
-        ele.style.fontFamily = "Helvetica, Arial, sans-serif";
-		
-		
-        if (photoSettings.active) {
-			ele.innerHTML += "<a href='" + currentPhoto.info.credit_url + "' id='mindfulBrowsingPhotoCredit'>Photo by " + currentPhoto.info.credit + "</a>";
-			if(!pendingPhotoUpdate && base64 != undefined) {
-				ele.style.background = "inherit";
-				ele.style.backgroundColor = "rgba(97, 144, 187, 1)";
-				ele.style.backgroundImage = "url(" + base64 + ")";
-			}
-        }
-        ele.style.backgroundSize = "cover";
-        ele.style.backgroundPosition = "center center";
-        ele.style.backgroundRepeat = "no-repeat";
-        document.body.appendChild(ele);
-		setTimeout(function() {
-			removeClassName(ele, "hidden");
-		}, 0);
-        
-        var btn = document.getElementById("mindfulBrowsingContinue");
-        btn.onclick = mindfulBrowsing.addBrowsingTimeout;
-		
-		var resumeBtn = document.getElementById("mindfulBrowsingQuickResumeButton");
-		if( resumeBtn )
-			resumeBtn.onclick = mindfulBrowsing.addBrowsingTimeout;
-		
-		mindfulBrowsing.updateOverlay();
-    };
+
+    mindfulBrowsing.addOverlay = async function() {
+	    inspiration = inspirations[Math.floor(Math.random() * inspirations.length)].title;
+	    var body = document.body;
+
+	    var ele = document.createElement("div");
+	    ele.classList.add("hidden");
+	    ele.id = "mindfulBrowsingConfirm";
+	    var innerHTML = [
+	        "<div class='mindfulBrowsingHeading' style='width: 50vw; margin: 0 auto; text-align: left; font-family: Helvetica, sans-serif;'>",
+	        "<h1 id='mindfulBrowsingMessage' style='font-size: 50px;'></h1>",
+	        "<h3 id='mindfulBrowsingNumSessions' style='font-size: 30px;'></h3>",
+	        `<div id='ankiCardContainer' style='height: 500px; width: 100%; border: 0; border-radius: 3px;
+	         padding: 6px; background: rgba(250, 250, 250, 0.5); backdrop-filter: blur(7px)'></div>`,
+	        "</div>",
+	        "<div class='mindfulBrowsingBody'>",
+	        "<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
+	        "<div class='options hidden' id='mindfulBrowsingOptions'>",
+	        "<a class='mindfulBtn' id='mindfulBrowsingContinue' href='#'>Yes, " + browseTimeMinutes + " minute" + (browseTimeMinutes > 1 ? "s" : "") + ".</a>",
+	        "<a class='mindfulBtn' id='mindfulBrowsingLeave' href='javascript:window.open(location,\"_self\");window.close();'>Actually, nah.</a>",
+	        "</div>",
+	        "</div>"
+	    ].join("");
+
+	    if (quickResume.active) {
+	        innerHTML += [
+	            "<div class='mindfulBrowsingQuickResume' id='mindfulBrowsingQuickResumeButton'>",
+	            "<h1>!</h1>",
+	            "<h2>resume</h2>",
+	            "</div>"
+	        ].join("");
+	    }
+
+	    ele.innerHTML = innerHTML;
+	    ele.style.background = "rgb(0,0,0)";
+	    ele.style.fontFamily = "Helvetica, Arial, sans-serif";
+
+	    if (photoSettings.active) {
+	        ele.innerHTML += "<a href='" + currentPhoto.info.credit_url + "' id='mindfulBrowsingPhotoCredit'>Photo by " + currentPhoto.info.credit + "</a>";
+	        if (!pendingPhotoUpdate && base64 != undefined) {
+	            ele.style.background = "inherit";
+	            ele.style.backgroundColor = "rgba(97, 144, 187, 1)";
+	            ele.style.backgroundImage = "url(" + base64 + ")";
+	        }
+	    }
+	    ele.style.backgroundSize = "cover";
+	    ele.style.backgroundPosition = "center center";
+	    ele.style.backgroundRepeat = "no-repeat";
+	    document.body.appendChild(ele);
+	    removeClassName(ele, "hidden");
+
+	    try {
+	        // Step 1: Get a list of card IDs from the selected deck
+	        const findCardsResponse = await fetch("http://127.0.0.1:8765", {
+	            method: "POST",
+	            headers: { "Content-Type": "application/json" },
+	            body: JSON.stringify({
+	                action: "findCards",
+	                version: 6,
+	                params: {
+	                    query: "deck:Sanctuary" // Replace 'default' with your desired deck name
+	                }
+	            })
+	        });
+	        const findCardsData = await findCardsResponse.json();
+
+	        if (findCardsData.error) {
+	            document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${findCardsData.error}</p>`;
+	            return;
+	        }
+
+	        if (findCardsData.result && findCardsData.result.length > 0) {
+	            // Step 2: Get details about the first card in the list
+	            const cardId = findCardsData.result[0]; // Take the first card ID from the list
+	            const cardInfoResponse = await fetch("http://127.0.0.1:8765", {
+	                method: "POST",
+	                headers: { "Content-Type": "application/json" },
+	                body: JSON.stringify({
+	                    action: "cardsInfo",
+	                    version: 6,
+	                    params: {
+	                        cards: [cardId]
+	                    }
+	                })
+	            });
+	            const cardInfoData = await cardInfoResponse.json();
+
+	            if (cardInfoData.error) {
+	                document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${cardInfoData.error}</p>`;
+	            } else if (cardInfoData.result && cardInfoData.result.length > 0) {
+	                // Step 3: Display card details in place of the Mochi iframe
+	                const card = cardInfoData.result[0];
+	                const question = card.question;
+	                const answer = card.answer;
+
+	                document.getElementById("ankiCardContainer").innerHTML = `
+                        <div style='font-family: Helvetica, sans-serif;'>
+				            <h2 style="color: black;">Flashcard</h2>
+				            <div style='padding: 10px; background: rgba(250,250,250,0.5); border-radius: 3px;'>
+				                <strong>Question:</strong> ${question}
+				            </div>
+				            <br>
+				            <div id='answer-container' style='display: none; padding: 10px; background: rgba(250,250,250,0.5);
+				             border-radius: 3px;'>
+				                <strong>Answer:</strong> ${answer}
+				            </div>
+				            <button id='show-answer-button' style='padding: 10px; margin-top: 10px; border-radius: 3px;
+				             background: #007bff; color: #ffffff; border: none; cursor: pointer;'>Show Answer</button>
+				             <div id='answer-options' style='display: none; margin-top: 20px; justify-content: space-around;
+				              font-size: 21px;'>
+				                <button class='answer-button' data-ease='1' style='
+				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
+				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Again</button>
+				                <button class='answer-button' data-ease='2' style='
+				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
+				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Hard</button>
+				                <button class='answer-button' data-ease='3' style='
+				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
+				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Good</button>
+				                <button class='answer-button' data-ease='4' style='
+				                margin-right: 10px; padding: 5px 15px; font-size: inherit;
+				                 background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Easy</button>
+				            </div>
+				        </div>
+                    `;
+                    const showAnswerButton = document.getElementById('show-answer-button');
+                    const answerContainer = document.getElementById('answer-container');
+                    const answerOptions = document.getElementById('answer-options');
+                    showAnswerButton.addEventListener('click', () => {
+		                answerContainer.style.display = 'block';
+		                showAnswerButton.style.display = 'none';
+		                answerOptions.style.display = 'flex';
+		            });
+
+		            const answerButtons = document.querySelectorAll('.answer-button');
+		             // Handle Answer Buttons Click
+			        answerButtons.forEach(button => {
+			            button.addEventListener('click', async (event) => {
+			                const easeValue = event.target.getAttribute('data-ease');
+			                
+			                try {
+			                    // API Call to answer the card
+			                    const response = await fetch("http://127.0.0.1:8765", {
+			                        method: "POST",
+			                        headers: { "Content-Type": "application/json" },
+			                        body: JSON.stringify({
+			                            action: "answerCards",
+			                            version: 6,
+			                            params: {
+			                                answers: [
+			                                    {
+			                                        cardId: cardId, // Replace with actual card ID
+			                                        ease: parseInt(easeValue)  // Ease value between 1 (Again) and 4 (Easy)
+			                                    }
+			                                ]
+			                            }
+			                        })
+			                    });
+
+			                    const responseData = await response.json();
+			                    if (responseData.error) {
+			                        alert(`Error: ${responseData.error}`);
+			                    } else {
+			                        alert(`Card answered with ease value: ${easeValue} is ${responseData.result[0]}`);
+			                    }
+			                } catch (err) {
+			                    alert(`Error: ${err.message}`);
+			                }
+			            });
+			        });
+	            }
+	        } else {
+	            document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">No cards found in the selected deck.</p>`;
+	        }
+	    } catch (err) {
+	        document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${err.message}</p>`;
+	    }
+
+	    // Attach event handlers for buttons
+	    var btn = document.getElementById("mindfulBrowsingContinue");
+	    btn.onclick = mindfulBrowsing.addBrowsingTimeout;
+
+	    var resumeBtn = document.getElementById("mindfulBrowsingQuickResumeButton");
+	    if (resumeBtn) resumeBtn.onclick = mindfulBrowsing.addBrowsingTimeout;
+
+	    mindfulBrowsing.updateOverlay();
+	};
+
+
 	mindfulBrowsing.addOverlayIfActive = function() {
 		if ( mindfulBrowsing.isActive() ) {
 			mindfulBrowsing.addOverlay();
