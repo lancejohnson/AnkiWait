@@ -277,7 +277,7 @@ function removeClassName(ele, className) {
 	            document.getElementById("ankiCardContainer").innerHTML = `<p style="color: red;">Error: ${cardInfoData.error}</p>`;
 	        } else if (cardInfoData.result) {
 	            const question = cardInfoData.result.question;
-	            const answer = cardInfoData.result.answer;
+	            const backContent = cardInfoData.result.answer.replace(question, '');
 
 	            // Step 3: Show the question and start the card timer
 	            document.getElementById("ankiCardContainer").innerHTML = `
@@ -288,7 +288,7 @@ function removeClassName(ele, className) {
 	                    <br>
 	                    <div id='answer-container' style='display: none; padding: 10px; background: rgba(0,0,0,0.5);
 	                     border-radius: 3px; font-size: 1.8em;'>
-	                        <strong>Answer:</strong> ${answer}
+	                        <strong>Answer:</strong> ${backContent}
 	                    </div>
 	                    <button id='show-answer-button' style='padding: 10px; margin-top: 10px; border-radius: 3px;
 	                     background: #007bff; color: #ffffff; border: none; cursor: pointer; font-size: 1.2em;'>Show Answer</button>
