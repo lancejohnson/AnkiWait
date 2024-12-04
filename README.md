@@ -1,4 +1,4 @@
-A chrome extention to beautifully interrupt mindless browsing, and put your time back in your hands.
+A chrome extention to interrupt mindless browsing and let you review your Anki flashcards instead.
 
 
-Learn more and install from https://mindfulbrowsing.org
+Fork of https://mindfulbrowsing.org
