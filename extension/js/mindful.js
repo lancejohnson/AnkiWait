@@ -210,7 +210,7 @@ function removeClassName(ele, className) {
 	        "<h1 id='mindfulBrowsingMessage' style='font-size: 50px;'></h1>",
 	        "<h3 id='mindfulBrowsingNumSessions' style='font-size: 30px;'></h3>",
 	        `<div id='ankiCardContainer' style='height: 500px; width: 100%; border: 0; border-radius: 3px;
-	         padding: 6px; background: rgba(250, 250, 250, 0.5); backdrop-filter: blur(7px)'></div>`,
+	         padding: 6px; background: #000; color: #fff;'></div>`,
 	        "</div>",
 	        "<div class='mindfulBrowsingBody'>",
 	        "<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
@@ -281,20 +281,19 @@ function removeClassName(ele, className) {
 
 	            // Step 3: Show the question and start the card timer
 	            document.getElementById("ankiCardContainer").innerHTML = `
-	                <div style='font-family: Helvetica, sans-serif;'>
-	                    <h2 style="color: black;">Flashcard</h2>
-	                    <div style='padding: 10px; background: rgba(250,250,250,0.5); border-radius: 3px;'>
+	                <div style='font-family: Helvetica, sans-serif; background: black; color: white;'>
+	                    <div style='padding: 10px; background: rgba(0,0,0,0.5); border-radius: 3px; font-size: 1.8em;'>
 	                        <strong>Question:</strong> ${question}
 	                    </div>
 	                    <br>
-	                    <div id='answer-container' style='display: none; padding: 10px; background: rgba(250,250,250,0.5);
-	                     border-radius: 3px;'>
+	                    <div id='answer-container' style='display: none; padding: 10px; background: rgba(0,0,0,0.5);
+	                     border-radius: 3px; font-size: 1.8em;'>
 	                        <strong>Answer:</strong> ${answer}
 	                    </div>
 	                    <button id='show-answer-button' style='padding: 10px; margin-top: 10px; border-radius: 3px;
-	                     background: #007bff; color: #ffffff; border: none; cursor: pointer;'>Show Answer</button>
+	                     background: #007bff; color: #ffffff; border: none; cursor: pointer; font-size: 1.2em;'>Show Answer</button>
 	                     <div id='answer-options' style='display: none; margin-top: 20px; justify-content: space-around;
-	                      font-size: 21px;'>
+	                      font-size: 1.2em;'>
 	                        <button class='answer-button' data-ease='1' style='
 	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
 	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Again</button>
