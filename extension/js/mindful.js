@@ -278,6 +278,7 @@ function removeClassName(ele, className) {
 	        } else if (cardInfoData.result) {
 	            const question = cardInfoData.result.question;
 	            const backContent = cardInfoData.result.answer.replace(question, '');
+	            const buttons = cardInfoData.result.buttons; // Get the buttons array
 
 	            // Step 3: Show the question and start the card timer
 	            document.getElementById("ankiCardContainer").innerHTML = `
@@ -294,18 +295,11 @@ function removeClassName(ele, className) {
 	                     background: #007bff; color: #ffffff; border: none; cursor: pointer; font-size: 1.2em;'>Show Answer</button>
 	                     <div id='answer-options' style='display: none; margin-top: 20px; justify-content: space-around;
 	                      font-size: 1.2em;'>
-	                        <button class='answer-button' data-ease='1' style='
-	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
-	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Again</button>
-	                        <button class='answer-button' data-ease='2' style='
-	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
-	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Hard</button>
-	                        <button class='answer-button' data-ease='3' style='
-	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
-	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Good</button>
-	                        <button class='answer-button' data-ease='4' style='
-	                        margin-right: 10px; padding: 5px 15px; font-size: inherit;
-	                         background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>Easy</button>
+	                        ${buttons.map(button => `
+	                            <button class='answer-button' data-ease='${button}' style='
+	                            margin-right: 10px; padding: 5px 15px; font-size: inherit;
+	                             background: #007bff; color: #ffffff; border: none; cursor: pointer; border-radius: 6px;'>${button}</button>
+	                        `).join('')}
 	                    </div>
 	                </div>
 	            `;
