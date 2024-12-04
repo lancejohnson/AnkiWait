@@ -452,7 +452,7 @@ function removeClassName(ele, className) {
 		} 
 	};
 	mindfulBrowsing.initWaitTimer = function() {
-		currentDelay = waitTimeSeconds;		
+		currentDelay = waitTimeSeconds;        
 		removeClassName(document.getElementById("mindfulBrowsingWaitTimer"), "hidden");
 		addClassName(document.getElementById("mindfulBrowsingOptions"), "hidden");
 		
@@ -461,10 +461,16 @@ function removeClassName(ele, className) {
 		if (continueBtn) {
 			continueBtn.disabled = true;
 			addClassName(continueBtn, "hidden");
-			continueBtn.style.pointerEvents = "none"; // Disable pointer events (clicks)
+			continueBtn.style.pointerEvents = "none";
 		}
-	
+
 		mindfulBrowsing.updateWaitTimerDisplay();
+
+		// Add visibility change listener
+		document.addEventListener('visibilitychange', function() {
+			mindfulBrowsing.updateTabIsFocused(!document.hidden);
+		});
+
 		setTimeout(function() {
 			mindfulBrowsing.resumeWaitTimer();
 		}, 500);
