@@ -285,12 +285,14 @@ function removeClassName(ele, className) {
 	            document.getElementById("ankiCardContainer").innerHTML = `
 	                <div style='font-family: Helvetica, sans-serif; background: black; color: white;'>
 	                    <div style='padding: 10px; background: rgba(0,0,0,0.5); border-radius: 3px; font-size: 1.8em;'>
-	                        <strong>Question:</strong> ${question}
+	                        <strong>Question:</strong> 
+	                        <span style="font-size: 1em;">${question.replace(/<sup>(.*?)<\/sup>/g, '<span style="font-size: 0.6em; vertical-align: super;">$1</span>')}</span>
 	                    </div>
 	                    <br>
 	                    <div id='answer-container' style='display: none; padding: 10px; background: rgba(0,0,0,0.5);
 	                     border-radius: 3px; font-size: 1.8em;'>
-	                        <strong>Answer:</strong> ${backContent}
+	                        <strong>Answer:</strong> 
+	                        <span style="font-size: 1em;">${backContent.replace(/<sup>(.*?)<\/sup>/g, '<span style="font-size: 0.6em; vertical-align: super;">$1</span>')}</span>
 	                    </div>
 	                    <button id='show-answer-button' style='padding: 10px; margin-top: 10px; border-radius: 3px;
 	                     background: #007bff; color: #ffffff; border: none; cursor: pointer; font-size: 1.2em;'>Show Answer</button>
