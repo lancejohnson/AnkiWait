@@ -214,9 +214,9 @@ function removeClassName(ele, className) {
 	        "</div>",
 	        "<div class='mindfulBrowsingBody'>",
 	        "<div class='timer' id='mindfulBrowsingWaitTimer'></div>",
-	        "<div class='options hidden' id='mindfulBrowsingOptions'>",
-	        "<a class='mindfulBtn' id='mindfulBrowsingContinue' href='#' style='margin-right: 20px; margin-bottom: 15px; display: inline-block;'>Yes, " + browseTimeMinutes + " minute" + (browseTimeMinutes > 1 ? "s" : "") + ".</a>",
-	        "<a class='mindfulBtn' id='mindfulBrowsingLeave' href='javascript:window.open(location,\"_self\");window.close();' style='display: inline-block;'>Actually, nah.</a>",
+	        "<div class='options hidden' id='mindfulBrowsingOptions' style='position: relative; height: 60px; width: 100%; max-width: 800px; margin: 0 auto;'>",
+	        "<a class='mindfulBtn' id='mindfulBrowsingContinue' href='#' style='position: absolute; display: inline-block; padding: 10px 20px;'>Yes, " + browseTimeMinutes + " minute" + (browseTimeMinutes > 1 ? "s" : "") + ".</a>",
+	        "<a class='mindfulBtn' id='mindfulBrowsingLeave' href='javascript:window.open(location,\"_self\");window.close();' style='position: absolute; display: inline-block; padding: 10px 20px;'>Actually, nah.</a>",
 	        "</div>",
 	        "</div>"
 	    ].join("");
@@ -383,6 +383,30 @@ function removeClassName(ele, className) {
 	    if (resumeBtn) resumeBtn.onclick = mindfulBrowsing.addBrowsingTimeout;
 
 	    mindfulBrowsing.updateOverlay();
+
+	    // Position buttons randomly on either side
+	    var optionsContainer = document.getElementById("mindfulBrowsingOptions");
+	    var continueBtn = document.getElementById("mindfulBrowsingContinue");
+	    var leaveBtn = document.getElementById("mindfulBrowsingLeave");
+	    
+	    // Calculate container width and button positions
+	    var containerWidth = optionsContainer.offsetWidth;
+	    var margin = 20; // margin from edges
+	    
+	    // Randomly decide which button goes on which side
+	    if (Math.random() < 0.5) {
+	        // Continue button on left, leave button on right
+	        continueBtn.style.left = margin + 'px';
+	        continueBtn.style.right = 'auto';
+	        leaveBtn.style.right = margin + 'px';
+	        leaveBtn.style.left = 'auto';
+	    } else {
+	        // Leave button on left, continue button on right
+	        leaveBtn.style.left = margin + 'px';
+	        leaveBtn.style.right = 'auto';
+	        continueBtn.style.right = margin + 'px';
+	        continueBtn.style.left = 'auto';
+	    }
 	};
 
 	mindfulBrowsing.addOverlayIfActive = function() {
