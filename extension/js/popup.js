@@ -9,11 +9,6 @@
     var allowedUrlPatterns = [
         { "urlPattern": ""}
     ];
-    var inspirations = [
-        { "title": "take five deep breaths" },
-        { "title": "take a quick walk" },
-        { "title": ""}
-    ];
 	var waitTimeSeconds = 30;
 	var browseTimeMinutes = 10;
 	var quickResume = {
@@ -86,16 +81,10 @@
                     saveAllowedUrlPatterns.push(allowedUrlPatterns[p]);
                 }
             }
-            var saveInspirations = [];
-            for (var t in inspirations) {
-                if (inspirations[t] && inspirations[t].title !== "") {
-                    saveInspirations.push(inspirations[t]);
-                }
-            }
+        
             chrome.storage.sync.set({
                 "blockedUrlPatterns": saveBlockedUrlPatterns,
                 "allowedUrlPatterns": saveAllowedUrlPatterns,
-                "inspirations": saveInspirations,
 				"waitTimeSeconds": waitTimeSeconds,
 				"browseTimeMinutes": browseTimeMinutes,
 				"quickResume": quickResume,
@@ -112,7 +101,6 @@
         chrome.storage.sync.get(null, function(settings) {
 			blockedUrlPatterns = settings.blockedUrlPatterns || blockedUrlPatterns;  
 			allowedUrlPatterns = settings.allowedUrlPatterns || allowedUrlPatterns;  
-			inspirations = settings.inspirations || inspirations;
 			waitTimeSeconds = settings.waitTimeSeconds || waitTimeSeconds;
 			browseTimeMinutes = settings.browseTimeMinutes || browseTimeMinutes;
 			quickResume = settings.quickResume || quickResume;
@@ -145,13 +133,6 @@
 			'	<div class="response"><label>http://</label><input type="text" placeholder="example.url" value="{{urlPattern}}" /><a class="removeX" on-click="removeAllowedUrl">&#x2716; <span class="label">Remove</span></a></div>'+
 			'	{{/allowedUrlPatterns}}'+
 			'	<div class="response addBtnRow"><a on-click="addAllowedUrl" class="addX" >&#x271A; <span class="label">Add another</span></a></div>'+
-			'</div>'+
-			'<h2>Inspirations:</h2>'+
-			'<div class="responses inspirations">'+
-			'	{{#inspirations:num}}'+
-			'	<div class="response"><input type="text" placeholder="what inspires you" value="{{title}}" /><a class="removeX" on-click="removeInspiration">&#x2716; <span class="label">Remove</span></a></div>'+
-			'	{{/inspirations}}'+
-			'	<div class="response addBtnRow"><a on-click="addInspiration" class="addX" >&#x271A; <span class="label">Add another</span></a></div>'+
 			'</div>'+
 			'<h2>Settings:</h2>'+
 			'<div class="settings">'+
@@ -207,7 +188,6 @@
 				name: 'world',
 				blockedUrlPatterns: blockedUrlPatterns,
 				allowedUrlPatterns: allowedUrlPatterns,
-				inspirations: inspirations,
 				waitTimeSeconds: waitTimeSeconds,
 				browseTimeMinutes: browseTimeMinutes,
 				quickResume: quickResume,
@@ -226,10 +206,6 @@
                 allowedUrlPatterns.push({ "urlPattern": ""});
 				return false;
             },
-            addInspiration: function() {
-                inspirations.push({ "title": ""});
-                return false;
-            },
             removeBlockedUrl: function(event) {
                 blockedUrlPatterns.splice(event.index.num, 1);
                 return false;
@@ -237,19 +213,12 @@
             removeAllowedUrl: function(event) {
                 allowedUrlPatterns.splice(event.index.num, 1);
                 return false;
-            },
-            removeInspiration: function(event) {
-                inspirations.splice(event.index.num, 1);
-                return false;
             }
         });
         ractive.observe('blockedUrlPatterns', function ( newValue, oldValue, keypath ) {
             saveSettings();
         }, false);
         ractive.observe('allowedUrlPatterns', function ( newValue, oldValue, keypath ) {
-            saveSettings();
-        }, false);
-        ractive.observe('inspirations', function ( newValue, oldValue, keypath ) {
             saveSettings();
         }, false);
 		ractive.observe('waitTimeSeconds', function( newValue, oldValue, keypath ) {
