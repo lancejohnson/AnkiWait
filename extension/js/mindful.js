@@ -377,9 +377,22 @@ function removeClassName(ele, className) {
 	    // Initial card load
 	    await loadCard();
 
+		function syncDeck() {
+			fetch("http://127.0.0.1:8765", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					"action": "sync",
+					"version": 6
+				})
+			});
+		}
 	    // Attach event handlers for buttons
 	    var btn = document.getElementById("mindfulBrowsingContinue");
-	    btn.onclick = mindfulBrowsing.addBrowsingTimeout;
+	    btn.onclick = function() {
+			mindfulBrowsing.addBrowsingTimeout();
+			syncDeck(); // Call syncDeck when the continue button is clicked
+		};
 
 	    var resumeBtn = document.getElementById("mindfulBrowsingQuickResumeButton");
 	    if (resumeBtn) resumeBtn.onclick = mindfulBrowsing.addBrowsingTimeout;
