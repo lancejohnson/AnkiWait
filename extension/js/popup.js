@@ -11,6 +11,7 @@
     ];
 	var waitTimeSeconds = 30;
 	var browseTimeMinutes = 10;
+	var deckName = "Sanctuary";
 	var quickResume = {
 		active: false
 	};
@@ -87,6 +88,7 @@
                 "allowedUrlPatterns": saveAllowedUrlPatterns,
 				"waitTimeSeconds": waitTimeSeconds,
 				"browseTimeMinutes": browseTimeMinutes,
+				"deckName": deckName,
 				"quickResume": quickResume,
 				"photo": photo,
 				"schedule": schedule,
@@ -103,6 +105,7 @@
 			allowedUrlPatterns = settings.allowedUrlPatterns || allowedUrlPatterns;  
 			waitTimeSeconds = settings.waitTimeSeconds || waitTimeSeconds;
 			browseTimeMinutes = settings.browseTimeMinutes || browseTimeMinutes;
+			deckName = settings.deckName || deckName;
 			quickResume = settings.quickResume || quickResume;
 			photo = settings.photo || photo;
 			schedule = settings.schedule || schedule;
@@ -138,6 +141,7 @@
 			'<div class="settings">'+
 			'	<div class="setting"><label class="main">Wait</label><input type="text" value="{{waitTimeSeconds}}" /> <span class="label">seconds</span></div>'+
 			'	<div class="setting"><label class="main">Browse</label><input type="text" value="{{browseTimeMinutes}}" /> <span class="label">minutes</span></div>'+
+			'	<div class="setting"><label class="main">Anki Deck</label><input type="text" value="{{deckName}}" /> <span class="label">name</span></div>'+
 			'	{{#quickResume}}'+
 			'	<div class="setting">'+
 			'		<label class="main">Quick Resume</label><label class="switch"><input type="checkbox" checked="{{active}}" /><span class="slider"></span></label>'+
@@ -190,6 +194,7 @@
 				allowedUrlPatterns: allowedUrlPatterns,
 				waitTimeSeconds: waitTimeSeconds,
 				browseTimeMinutes: browseTimeMinutes,
+				deckName: deckName,
 				quickResume: quickResume,
 				photo: photo,
 				schedule: schedule,
@@ -230,6 +235,12 @@
 		ractive.observe('browseTimeMinutes', function( newValue, oldValue, keypath ) {
 			if (newValue && typeof newValue === 'number' && newValue >= 1) {
 				browseTimeMinutes = Math.floor(newValue);
+				saveSettings();
+			}
+		}, false);
+		ractive.observe('deckName', function( newValue, oldValue, keypath ) {
+			if (newValue && typeof newValue === 'string') {
+				deckName = newValue;
 				saveSettings();
 			}
 		}, false);

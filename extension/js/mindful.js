@@ -42,6 +42,7 @@ function removeClassName(ele, className) {
     var base64;
 	var waitTimeSeconds;
 	var browseTimeMinutes;
+	var deckName;
 	var quickResume;
 	var currentDelay = 0;
 	var waitIntervalId;
@@ -90,6 +91,7 @@ function removeClassName(ele, className) {
       inspirations = settings.inspirations || {};
 	  waitTimeSeconds = settings.waitTimeSeconds || 30;
 	  browseTimeMinutes = settings.browseTimeMinutes || 10;
+	  deckName = settings.deckName || "Sanctuary";
 	  quickResume = settings.quickResume || { active: false };
 	  schedule = settings.schedule || {};
 	  limitation = settings.limitation || {};
@@ -256,7 +258,7 @@ function removeClassName(ele, className) {
 	                action: "guiDeckReview",
 	                version: 6,
 	                params: {
-	                    name: "Sanctuary"
+	                    name: deckName
 	                }
 	            })
 	        });
