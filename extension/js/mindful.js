@@ -199,7 +199,6 @@ function removeClassName(ele, className) {
     };
 
     mindfulBrowsing.addOverlay = async function() {
-	    inspiration = inspirations[Math.floor(Math.random() * inspirations.length)].title;
 	    var body = document.body;
 
 	    var ele = document.createElement("div");
