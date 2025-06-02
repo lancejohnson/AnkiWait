@@ -393,6 +393,10 @@ q:before, #mindfulBrowsingConfirm q:after {
 	margin: 0 5px 0 5px;
 	text-align: center;
 }
+#mindfulBrowsingPopup .setting input[type="text"] {
+	width: 200px;
+	text-align: left;
+}
 #mindfulBrowsingPopup .setting {
 	margin: 0 0 8px 0;
 	vertical-align: middle;
